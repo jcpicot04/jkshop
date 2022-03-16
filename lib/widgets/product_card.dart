@@ -15,64 +15,72 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double widthValue = MediaQuery.of(context).size.width / widthFactor;
-    return Stack(
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width / 1.8,
-          height: 150,
-          child: Image.network(
-            product.imageUrl,
-            fit: BoxFit.cover,
-          ),
-        ),
-        Positioned(
-          top: 60,
-          left: 10,
-          child: Container(
-            width: MediaQuery.of(context).size.width / 1.5 - 10,
-            height: 90,
-            decoration: BoxDecoration(
-              color: Colors.black,
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          '/product',
+          arguments: product,);
+      },
+      child: Stack(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width / 1.8,
+            height: 150,
+            child: Image.network(
+              product.imageUrl,
+              fit: BoxFit.cover,
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          Positioned(
+            top: 60,
+            left: 10,
+            child: Container(
+              width: MediaQuery.of(context).size.width / 1.5 - 10,
+              height: 90,
+              decoration: BoxDecoration(
+                color: Colors.black,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
                   children: [
-                    Text(
-                      product.name,
-                      style: Theme.of(context).textTheme.headline5!.copyWith(
-                        color: Colors.white,
-                      ),
-                      ),
-                    Text(
-                      '\€${product.price}',
-                      style: Theme.of(context).textTheme.headline6!.copyWith(
-                        color: Colors.white,
-                      ),
-                      ),
-                  ],
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        product.name,
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                          color: Colors.white,
+                        ),
+                        ),
+                      Text(
+                        '\€${product.price}',
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                          color: Colors.white,
+                        ),
+                        ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+                    child: IconButton(
+                      alignment: Alignment.topCenter,
+                      onPressed: () {},
+                       icon: Icon(
+                         Icons.add_circle,
+                         color: Colors.white,
+                       ),
+                       ),
+                  ),
+                ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
-                  child: IconButton(
-                    alignment: Alignment.topCenter,
-                    onPressed: () {},
-                     icon: Icon(
-                       Icons.add_circle,
-                       color: Colors.white,
-                     ),
-                     ),
-                ),
-              ],
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
