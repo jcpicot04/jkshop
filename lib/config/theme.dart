@@ -4,7 +4,7 @@ ThemeData theme() {
   return ThemeData(
     scaffoldBackgroundColor: Colors.white,
     fontFamily: 'Avenir',
-    textTheme: TextTheme(),
+    textTheme: textTheme(),
   );
 }
 
@@ -22,7 +22,7 @@ TextTheme textTheme() {
     ),
     headline3: TextStyle(
       color: Colors.black,
-      fontSize: 32,
+      fontSize: 20,
       fontWeight: FontWeight.bold,
     ),
     headline4: TextStyle(

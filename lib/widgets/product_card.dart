@@ -5,11 +5,15 @@ import '../models/models.dart';
 class ProductCard extends StatelessWidget {
   final Product product;
   final double widthFactor;
+  final double leftPosition;
+  final bool isWishList;
 
   const ProductCard({
     Key? key,
     required this.product,
-    this.widthFactor = 2.5
+    this.widthFactor = 1.5,
+    this.leftPosition = 5,
+    this.isWishList = false,
   }) : super(key: key);
 
   @override
@@ -25,8 +29,8 @@ class ProductCard extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            width: MediaQuery.of(context).size.width / 1.8,
-            height: 150,
+            width: widthValue - 10,
+            height: 160,
             child: Image.network(
               product.imageUrl,
               fit: BoxFit.cover,
@@ -34,9 +38,9 @@ class ProductCard extends StatelessWidget {
           ),
           Positioned(
             top: 60,
-            left: 10,
+            left: leftPosition,
             child: Container(
-              width: MediaQuery.of(context).size.width / 1.5 - 10,
+              width: widthValue - 20 - leftPosition,
               height: 90,
               decoration: BoxDecoration(
                 color: Colors.black,
@@ -45,35 +49,49 @@ class ProductCard extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        product.name,
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                          color: Colors.white,
-                        ),
-                        ),
-                      Text(
-                        '\€${product.price}',
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
-                          color: Colors.white,
-                        ),
-                        ),
-                    ],
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          product.name,
+                          style: Theme.of(context).textTheme.headline3!.copyWith(
+                            color: Colors.white,
+                          ),
+                          ),
+                        Text(
+                          '\€${product.price}',
+                          style: Theme.of(context).textTheme.headline3!.copyWith(
+                            color: Colors.white,
+                          ),
+                          ),
+                      ],
+                      
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
-                    child: IconButton(
-                      alignment: Alignment.topCenter,
-                      onPressed: () {},
-                       icon: Icon(
-                         Icons.add_circle,
-                         color: Colors.white,
-                       ),
-                       ),
-                  ),
+                      Expanded(
+                        child: IconButton(
+                          alignment: Alignment.topCenter,
+                          onPressed: () {},
+                           icon: Icon(
+                             Icons.add_circle,
+                             color: Colors.white,
+                           ),
+                           ),
+                      ),
+                      isWishList ?
+                      Expanded(
+                        child: IconButton(
+                          alignment: Alignment.topCenter,
+                          onPressed: () {},
+                           icon: Icon(
+                             Icons.delete,
+                             color: Colors.white,
+                           ),
+                           ),
+                      ) : SizedBox(),
                 ],
                 ),
               ),
