@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "396326915409",
+    "project_id": "jkshop-2f1c9",
+    "storage_bucket": "jkshop-2f1c9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396326915409:android:7ffe5fd84fe22dd128d770",
+        "android_client_info": {
+          "package_name": "com.example.flutter_ecommerce_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396326915409-iec838bn40bpeimkrffvlu18e465jooo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlKdjmEA9YAfH_3wEuDjLwmIiTIqfeyNQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396326915409-iec838bn40bpeimkrffvlu18e465jooo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

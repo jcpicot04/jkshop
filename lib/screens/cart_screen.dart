@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecommerce_app/models/cart_model.dart';
+import '../blocs/cart/cart_bloc.dart';
 import '../models/models.dart';
 import '../widgets/widgets.dart';
 import '../config/theme.dart';
@@ -16,41 +19,50 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Carrito'),
-      bottomNavigationBar:BottomAppBar(
-        color: Colors.black,
-        child: Container(
-          height: 120,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.white),
-                onPressed: () {},
-                child: Text(
-                  'FINALIZAR COMPRA',
-                  style: Theme.of(context).textTheme.headline3!.copyWith(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 32),
-                ),
-              )
-            ],
+        appBar: CustomAppBar(title: 'Carrito'),
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.black,
+          child: Container(
+            height: 120,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.white),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/checkout');
+                  },
+                  child: Text(
+                    'FINALIZAR COMPRA',
+                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 32),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 18.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-            Column(
-              children: [
+        body: BlocBuilder<CartBloc, CartState>(
+          builder: (context, state) {
+            if (state is CartLoading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (state is CartLoaded) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 18.0),
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+              Column(
+                children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  Text('Añade €20 para envío gratis', style: Theme.of(context).textTheme.headline2,),
+                  Text(state.cart.freeDeliveryString, style: Theme.of(context).textTheme.headline3,),
                   ElevatedButton(onPressed: () {
                     Navigator.pushNamed(context, '/cart');
                   },
@@ -75,90 +87,25 @@ class CartScreen extends StatelessWidget {
                   
                 ),
             SizedBox(height: 10,),
-            CartProductCard(product: Product.products[0],),
-            CartProductCard(product: Product.products[1],),
-            CartProductCard(product: Product.products[2],),
-            CartProductCard(product: Product.products[3],),
-            CartProductCard(product: Product.products[4],),
+
+            SizedBox(
+              height: 800,
+              child: ListView.builder(
+                itemCount: state.cart.productQuantity(state.cart.products).keys.length,
+                itemBuilder: (context, index) { 
+                  return CartProductCard(product: state.cart.productQuantity(state.cart.products).keys.elementAt(index), quantity: state.cart.productQuantity(state.cart.products).values.elementAt(index));
+                 },
+              ),      
+            )
               ],
             ),
-            Column(children: [
-            Divider(
-              thickness: 2,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 10.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'SUBTOTAL',
-                        style: Theme.of(context).textTheme.headline3,
-                      ),
-                      Text(
-                        '€9.99',
-                        style: Theme.of(context).textTheme.headline3,
-                      ),
-                    ]
-                  ),
-                  SizedBox(height: 10,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'TASA DE ENVÍO',
-                      style: Theme.of(context).textTheme.headline3,
-                      ),
-                      Text(
-                        '€2.99',
-                        style: Theme.of(context).textTheme.headline3,
-                      ),
-                   ]
-                 ),
-                SizedBox(height: 20,),
-                 Stack(children: [
-                   Container(
-                     width: MediaQuery.of(context).size.width,
-                     height: 60,
-                     decoration: BoxDecoration(
-                       color: Colors.black.withAlpha(50),
-                     ),
-                   ),
-                   Container(
-                     width: MediaQuery.of(context).size.width,
-                     margin: const EdgeInsets.all(5.0),
-                     height: 50,
-                     decoration: BoxDecoration(
-                       color: Colors.black,
-                     ),
-                     child: Padding(
-                       padding: const EdgeInsets.symmetric(horizontal:40.0),
-                       child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                        Text(
-                          'TOTAL',
-                        style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.white),
-                        ),
-                        Text(
-                          '€12.98',
-                          style: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.white),
-                        ),
-                   ]
-                 ),
-                     ),
-                   ),
-                 ],)
-                ],
-              ),
-            ),
-            ],),
-      
+            OrderSummary(),
           ]),
-        ),
-      ),
-    );
-  } 
+        );
+            }else{
+              return Text('Algo ha salido mal');
+            }
+          }
+        ));
+  }
 }

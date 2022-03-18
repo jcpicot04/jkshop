@@ -6,7 +6,6 @@ import '../widgets/widgets.dart';
 
 class WishlistScreen extends StatelessWidget {
   static const String routeName = '/wishlist';
-
   static Route route() {
     return MaterialPageRoute(
       settings: RouteSettings(name: routeName),
@@ -18,7 +17,7 @@ class WishlistScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: 'Favoritos'),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: const CustomNavBar(screen: routeName),
       body: BlocBuilder<WishlistBloc, WishlistState>(
         builder: (context, state) {
           if (state is WishlistLoading) {

@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../blocs/cart/cart_bloc.dart';
 import '../blocs/wishlist/wishlist_bloc.dart';
 import '../models/models.dart';
 import '../widgets/widgets.dart';
@@ -40,9 +41,12 @@ class ProductScreen extends StatelessWidget {
                 builder: (context, state) {
                   return IconButton(
                       onPressed: () {
-                        final snackBar = SnackBar(content: Text('Añadido a tu lista de deseos!'));
+                        final snackBar = SnackBar(
+                            content: Text('Añadido a tu lista de deseos!'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        context.read<WishlistBloc>().add(AddWishlistProduct(product));
+                        context
+                            .read<WishlistBloc>()
+                            .add(AddWishlistProduct(product));
                       },
                       icon: Icon(
                         Icons.favorite,
@@ -50,16 +54,23 @@ class ProductScreen extends StatelessWidget {
                       ));
                 },
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.white),
-                onPressed: () {},
-                child: Text(
-                  'AÑADIR AL CARRITO',
-                  style: Theme.of(context).textTheme.headline3!.copyWith(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 32),
-                ),
+              BlocBuilder<CartBloc, CartState>(
+                builder: (context, state) {
+                  return ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.white),
+                    onPressed: () {
+                        context.read<CartBloc>().add(AddCartProduct(product));
+                        Navigator.pushNamed(context, '/cart');
+                    },
+                    child: Text(
+                      'AÑADIR AL CARRITO',
+                      style: Theme.of(context).textTheme.headline3!.copyWith(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 32),
+                    ),
+                  );
+                },
               )
             ],
           ),

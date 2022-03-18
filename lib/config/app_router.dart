@@ -12,6 +12,8 @@ class AppRouter{
     switch (settings.name){
       case HomeScreen.routeName:
         return HomeScreen.route();
+      case SplashScreen.routeName:
+        return SplashScreen.route();
       case CartScreen.routeName:
         return CartScreen.route();
       case CatalogScreen.routeName:
@@ -20,6 +22,8 @@ class AppRouter{
         return WishlistScreen.route();
       case ProductScreen.routeName:
         return ProductScreen.route(product: settings.arguments as Product);
+      case CheckoutScreen.routeName:
+        return CheckoutScreen.route();
       default:
         return _errorRoute();
 

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../blocs/cart/cart_bloc.dart';
+import '../blocs/wishlist/wishlist_bloc.dart';
 import '../models/models.dart';
 
 class ProductCard extends StatelessWidget {
@@ -24,7 +27,8 @@ class ProductCard extends StatelessWidget {
         Navigator.pushNamed(
           context,
           '/product',
-          arguments: product,);
+          arguments: product,
+        );
       },
       child: Stack(
         children: [
@@ -49,50 +53,70 @@ class ProductCard extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          product.name,
-                          style: Theme.of(context).textTheme.headline3!.copyWith(
-                            color: Colors.white,
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            product.name,
+                            style:
+                                Theme.of(context).textTheme.headline3!.copyWith(
+                                      color: Colors.white,
+                                    ),
                           ),
+                          Text(
+                            '\€${product.price}',
+                            style:
+                                Theme.of(context).textTheme.headline3!.copyWith(
+                                      color: Colors.white,
+                                    ),
                           ),
-                        Text(
-                          '\€${product.price}',
-                          style: Theme.of(context).textTheme.headline3!.copyWith(
-                            color: Colors.white,
-                          ),
-                          ),
-                      ],
-                      
-                    ),
-                  ),
-                      Expanded(
-                        child: IconButton(
-                          alignment: Alignment.topCenter,
-                          onPressed: () {},
-                           icon: Icon(
-                             Icons.add_circle,
-                             color: Colors.white,
-                           ),
-                           ),
+                        ],
                       ),
-                      isWishList ?
-                      Expanded(
-                        child: IconButton(
-                          alignment: Alignment.topCenter,
-                          onPressed: () {},
-                           icon: Icon(
-                             Icons.delete,
-                             color: Colors.white,
-                           ),
-                           ),
-                      ) : SizedBox(),
-                ],
+                    ),
+                    BlocBuilder<CartBloc, CartState>(
+                      builder: (context, state) {
+                        if (state is CartLoading) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (state is CartLoaded) {
+                        return Expanded(
+                          child: IconButton(
+                            alignment: Alignment.topCenter,
+                            onPressed: () {
+                              context.read<CartBloc>().add(AddCartProduct(product));
+                            },
+                            icon: Icon(
+                              Icons.add_circle,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ); 
+                        }else{
+                          return Text('Algo ha salido mal');
+                        }
+
+                      },
+                    ),
+                    isWishList
+                        ? Expanded(
+                            child: IconButton(
+                              alignment: Alignment.topCenter,
+                              onPressed: () {
+                              context.read<WishlistBloc>().add(RemoveWishlistProduct(product));
+                              },
+                              icon: Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
+                  ],
                 ),
               ),
             ),
