@@ -7,7 +7,7 @@ import '../screens/screens.dart';
 class AppRouter{
   static Route onGenerateRoute(RouteSettings settings){
 
-    print('This is route: ${settings.name}');
+    print('Ruta: ${settings.name}');
 
     switch (settings.name){
       case HomeScreen.routeName:
@@ -24,6 +24,8 @@ class AppRouter{
         return ProductScreen.route(product: settings.arguments as Product);
       case CheckoutScreen.routeName:
         return CheckoutScreen.route();
+      case OrderScreen.routeName:
+        return OrderScreen.route();
       default:
         return _errorRoute();
 

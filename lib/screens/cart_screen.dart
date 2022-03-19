@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_ecommerce_app/models/cart_model.dart';
 import '../blocs/cart/cart_bloc.dart';
-import '../models/models.dart';
 import '../widgets/widgets.dart';
-import '../config/theme.dart';
 
 class CartScreen extends StatelessWidget {
   static const String routeName = '/cart';

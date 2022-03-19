@@ -40,6 +40,8 @@ class CustomNavBar extends StatelessWidget {
         return _buildGoToCheckoutNavBar(context);
       case '/checkout':
         return _buildOrderNowNavBar(context);
+      case '/order-confirmation':
+        return _buildConfirmNowNavBar(context);
       default:
         _buildNavBar(context);
     }
@@ -89,6 +91,8 @@ class CustomNavBar extends StatelessWidget {
             return ElevatedButton(
               onPressed: () {
                 context.read<CheckoutBloc>().add(ConfirmCheckout(checkout: state.checkout));
+
+                Navigator.pushNamedAndRemoveUntil(context,'/order-confirmation',(Route<dynamic> route) => false);
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
@@ -96,6 +100,40 @@ class CustomNavBar extends StatelessWidget {
               ),
               child: Text(
                 'COMPRAR',
+                style: Theme.of(context).textTheme.headline3,
+              )
+              );
+          } else{
+            return Text('Algo ha salido mal');
+          }
+
+        },
+      ),
+    ];
+  }
+
+  List<Widget> _buildConfirmNowNavBar(context) {
+    return [
+      BlocBuilder<CheckoutBloc, CheckoutState>(
+        builder: (context, state) {
+          if (state is CheckoutLoading) {
+            return Center(child: CircularProgressIndicator(),
+            );
+          }
+          if (state is CheckoutLoaded) {
+            return ElevatedButton(
+              onPressed: () {
+                context.read<CheckoutBloc>().add(ConfirmCheckout(checkout: state.checkout));
+
+                Navigator.pushNamedAndRemoveUntil(context,'/',(Route<dynamic> route) => false);
+                state.products?.clear();
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+                shape: RoundedRectangleBorder(),
+              ),
+              child: Text(
+                'Volver a la tienda',
                 style: Theme.of(context).textTheme.headline3,
               )
               );
