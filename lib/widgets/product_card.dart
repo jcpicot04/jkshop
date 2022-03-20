@@ -34,14 +34,14 @@ class ProductCard extends StatelessWidget {
         children: [
           Container(
             width: widthValue - 10,
-            height: 160,
+            height: 310,
             child: Image.network(
               product.imageUrl,
-              fit: BoxFit.cover,
+              fit: BoxFit.fitWidth,
             ),
           ),
           Positioned(
-            top: 60,
+            top: 230,
             left: leftPosition,
             child: Container(
               width: widthValue - 20 - leftPosition,
@@ -88,6 +88,9 @@ class ProductCard extends StatelessWidget {
                           child: IconButton(
                             alignment: Alignment.topCenter,
                             onPressed: () {
+                              final snackBar = SnackBar(
+                                content: Text('Producto añadido al carrito!'));
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
                               context.read<CartBloc>().add(AddCartProduct(product));
                             },
                             icon: Icon(

@@ -25,7 +25,7 @@ class ProductScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(title: product.name),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
+        color: Colors.deepPurple,
         child: Container(
           height: 100,
           child: Row(
@@ -67,7 +67,7 @@ class ProductScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline3!.copyWith(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
-                          fontSize: 32),
+                          fontSize: 30),
                     ),
                   );
                 },
@@ -106,7 +106,7 @@ class ProductScreen extends StatelessWidget {
                     margin: const EdgeInsets.all(5.0),
                     width: MediaQuery.of(context).size.width - 10,
                     height: 80,
-                    color: Colors.black,
+                    color: Colors.deepPurple,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Row(
@@ -166,12 +166,12 @@ class ProductScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold, color: Colors.black)),
                   children: [
                     ListTile(
-                      title: Text('gregerger',
+                      title: Text('Los productos son enviados para toda España en un plazo de 2/3 días a partir del momento de su compra.',
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
                               .copyWith(
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   color: Colors.grey,
                                   fontWeight: FontWeight.bold)),
                     )

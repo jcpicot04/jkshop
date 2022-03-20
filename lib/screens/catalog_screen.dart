@@ -25,7 +25,6 @@ class CatalogScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(title: category.name),
       bottomNavigationBar: CustomNavBar(screen: routeName),
-      //METE AQUI EL BLOC DE PRODUCT Y REEMPLAZA LA LÓGICA DE CATEGORYPRODUCTS DENTRO DEL BLOC EN EL RETURN COMO EN HOMESCREEN
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
           if (state is ProductLoading) {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce_app/models/category_model.dart';
 import 'package:flutter_ecommerce_app/models/models.dart';
 
 import '../screens/screens.dart';
@@ -26,6 +25,8 @@ class AppRouter{
         return CheckoutScreen.route();
       case OrderScreen.routeName:
         return OrderScreen.route();
+      case SignInScreen.routeName:
+        return SignInScreen.route();
       default:
         return _errorRoute();
 

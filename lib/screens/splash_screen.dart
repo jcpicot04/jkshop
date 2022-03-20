@@ -17,7 +17,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(seconds: 2), (() => Navigator.pushNamedAndRemoveUntil(context,'/',(Route<dynamic> route) => false)));
+    Timer(Duration(seconds: 2), (() => Navigator.pushNamedAndRemoveUntil(context,'/signin',(Route<dynamic> route) => false)));
 
     return Scaffold(
       body: Column(
@@ -31,7 +31,7 @@ class SplashScreen extends StatelessWidget {
             ),
           ),
           Container(
-            color: Colors.black,
+            color: Colors.black87,
             padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
             child: Text(
               'Bienvenido!',
